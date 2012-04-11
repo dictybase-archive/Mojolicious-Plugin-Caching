@@ -30,42 +30,43 @@ isnt( $cache->is_valid( $base . '/book' ),
     1, 'it has not cached /book with 404 response code' );
 
 use_ok('User');
-$test = Test::Mojo->new 'User' );
-$test->get_ok('/user')->status_is(200)->content_is( 'users',
-        'it matches the content from the get request' );
+$test = Test::Mojo->new('User');
+$test->get_ok('/user')->status_is(200)
+    ->content_is( 'users', 'it matches the content from the get request' );
 $base = 'http://localhost:' . $test->tx->remote_port;
 is( $cache->is_valid( $base . '/user' ), 1, 'it has cached /user url' );
 
 #remove the cache now to test the other responses
 $cache->remove( $base . '/user' );
-$test->post_form_ok(
-        '/user' => { id => 23 }
-    )->status_is(200)->content_is( 'added 23',
-        'it made a successful post request' );
+$test->post_form_ok( '/user' => { id => 23 } )->status_is(200)
+    ->content_is( 'added 23', 'it made a successful post request' );
 isnt( $cache->is_valid( $base . '/user' ),
-        1, 'it does not cache response from post request' );
+    1, 'it does not cache response from post request' );
 
-$test->delete_ok('/user/23')->status_is(200)->content_is( 'deleted 23',
-        'it has made a successful delete request' );
+$test->delete_ok('/user/23')->status_is(200)
+    ->content_is( 'deleted 23', 'it has made a successful delete request' );
 isnt( $cache->is_valid( $base . '/user/23' ),
-        1, 'it does not cache response from delete request for /user/23' );
+    1, 'it does not cache response from delete request for /user/23' );
 
-$test->get_ok( $base . '/user/23' )->status_is(200)->content_is( 'showing 23',
-        'it has made a successful get request with user id' );
+$test->get_ok( $base . '/user/23' )->status_is(200)
+    ->content_is( 'showing 23',
+    'it has made a successful get request with user id' );
 is( $cache->is_valid( $base . '/user/23' ),
-        1, 'it cached response from get request for /user/23' );
+    1, 'it cached response from get request for /user/23' );
 
-$test->get_ok('/user/23/email')->status_is(200)->content_is( 'email 23',
-        'it has received response for /user/23/email with a get request' );
+$test->get_ok('/user/23/email')->status_is(200)
+    ->content_is( 'email 23',
+    'it has received response for /user/23/email with a get request' );
 isnt( $cache->is_valid( $base . '/user/23/email' ),
-        1, 'it does not cache response for /user/23/email' );
+    1, 'it does not cache response for /user/23/email' );
 
-$test->get_ok('/user/23/name')->status_is(200)->content_is( 'name 23',
-        'it has received response for /user/23/name with a get request' );
+$test->get_ok('/user/23/name')->status_is(200)
+    ->content_is( 'name 23',
+    'it has received response for /user/23/name with a get request' );
 isnt( $cache->is_valid( $base . '/user/23/name' ),
-        1, 'it does not cache response for /user/23/name' );
+    1, 'it does not cache response for /user/23/name' );
 
 #cleanup
 END {
-        remove_tree($tmp_dir);
+    remove_tree($tmp_dir);
 }
