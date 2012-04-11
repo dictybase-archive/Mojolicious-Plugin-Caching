@@ -4,7 +4,7 @@
       "Siddhartha Basu <biosidd@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.200004, CPAN::Meta::Converter version 2.101670",
+   "generated_by" : "Dist::Zilla version 4.300014, CPAN::Meta::Converter version 2.120630",
    "license" : [
       "perl_5"
    ],
@@ -36,10 +36,10 @@
    "resources" : {
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/cybersiddhu/Mojolicious-Plugin-Caching.git",
-         "web" : "http://github.com/cybersiddhu/Mojolicious-Plugin-Caching"
+         "url" : "git://github.com/dictyBase/Mojolicious-Plugin-Caching.git",
+         "web" : "https://github.com/dictyBase/Mojolicious-Plugin-Caching"
       }
    },
-   "version" : "0.0015"
+   "version" : "0.0016"
 }
 

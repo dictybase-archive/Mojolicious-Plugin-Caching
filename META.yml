@@ -7,7 +7,7 @@ build_requires:
 configure_requires:
   Module::Build: 0.3601
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.200004, CPAN::Meta::Converter version 2.101670'
+generated_by: 'Dist::Zilla version 4.300014, CPAN::Meta::Converter version 2.120630'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -18,5 +18,5 @@ requires:
   File::Path: 2.08
   Mojolicious: 1.21
 resources:
-  repository: git://github.com/cybersiddhu/Mojolicious-Plugin-Caching.git
-version: 0.0015
+  repository: git://github.com/dictyBase/Mojolicious-Plugin-Caching.git
+version: 0.0016

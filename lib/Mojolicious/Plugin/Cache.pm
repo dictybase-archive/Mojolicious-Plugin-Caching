@@ -1,7 +1,6 @@
 package Mojolicious::Plugin::Cache;
-
-BEGIN {
-    $Mojolicious::Plugin::Cache::VERSION = '0.0015';
+{
+    $Mojolicious::Plugin::Cache::VERSION = '0.0016';
 }
 
 # Module implementation
@@ -20,7 +19,7 @@ Mojolicious::Plugin::Cache - Mojolicious plugin for caching
 
 =head1 VERSION
 
-version 0.0015
+version 0.0016
 
 =head1 SYNOPSIS
 
