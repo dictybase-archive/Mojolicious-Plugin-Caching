@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use CHI;
 use Carp;
+use Mojo::Base -base;
 use base qw/Mojolicious::Plugin/;
 
 # Module implementation
@@ -12,7 +13,7 @@ use base qw/Mojolicious::Plugin/;
 my $cache;
 my $actions;
 
-__PACKAGE__->attr( 'driver' => 'Memory' );
+has 'cache' => sub { CHI->new( driver => 'Memory' ) };
 
 sub register {
     my ( $self, $app, $conf ) = @_;
@@ -26,24 +27,20 @@ sub register {
         if ( defined $conf->{options} ) {
             my $opt = $conf->{options};
             $opt->{driver} = $self->driver if not defined $opt->{driver};
-            $cache = CHI->new(%$opt);
-        }
-        else {
-            $cache = CHI->new(
-                driver   => $self->driver
-            );
+            $self->cache( CHI->new(%$opt) );
         }
     }
 
     if ( $app->log->level eq 'debug' ) {
-        $cache->on_set_error('log');
-        $cache->on_get_error('log');
+        $self->cache->on_set_error('log');
+        $self->cache->on_get_error('log');
     }
 
-    $app->plugins->add_hook(
+    $app->hook(
         'before_dispatch' => sub {
-            my ( $self, $c ) = @_;
-            my $path = $c->tx->req->url->to_abs->to_string;
+            my ($c)   = @_;
+            my $cache = $self->cache;
+            my $path  = $c->req->url->to_abs->to_string;
             $app->log->debug( ref $path );
             if ( $cache->is_valid($path) ) {
                 $app->log->debug("serving from cache for $path");
@@ -56,9 +53,9 @@ sub register {
         }
     );
 
-    $app->plugins->add_hook(
+    $app->hook(
         'after_dispatch' => sub {
-            my ( $self, $c ) = @_;
+            my ($c) = @_;
 
             #conditions at which no caching will be done
             ## - it is already a cached response
@@ -79,7 +76,7 @@ sub register {
                     and not exists $actions->{$name};
 
             $app->log->debug("storing in cache for $path and action $name");
-            $cache->set(
+            $self->cache->set(
                 $path,
                 {   body    => $c->res->body,
                     headers => $c->res->headers,
