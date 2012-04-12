@@ -31,7 +31,7 @@ sub register {
         $actions = { map { $_ => 1 } @{ $conf->{actions} } };
     }
 
-    $app->add_hook(
+    $app->hook(
         'after_dispatch' => sub {
             my ($c) = @_;
 
