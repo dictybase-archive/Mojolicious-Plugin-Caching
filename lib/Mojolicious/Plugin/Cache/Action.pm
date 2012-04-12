@@ -13,9 +13,7 @@ use base qw/Mojolicious::Plugin/;
 # Module implementation
 #
 
-my $actions;
-
-has 'cache' => sub { CHI->new( driver => 'Memory' ) };
+my ( $actions, $cache );
 has 'driver' => 'Memory';
 
 sub register {
@@ -26,25 +24,26 @@ sub register {
     }
 
     #setup cache
-    #if ( !$cache ) {
-    if ( defined $conf->{options} ) {
-        my $opt = $conf->{options};
-        $opt->{driver} = $self->driver if not defined $opt->{driver};
-        $self->cache( CHI->new(%$opt) );
+    if ( !$cache ) {
+        if ( defined $conf->{options} ) {
+            my $opt = $conf->{options};
+            $opt->{driver} = $self->driver if not defined $opt->{driver};
+            $cache = CHI->new(%$opt);
+        }
+        else {
+            $cache = CHI->new( driver => $self->driver );
+        }
     }
 
-    #}
-
     if ( $app->log->level eq 'debug' ) {
-        $self->cache->on_set_error('log');
-        $self->cache->on_get_error('log');
+        $cache->on_set_error('log');
+        $cache->on_get_error('log');
     }
 
     $app->hook(
         'before_dispatch' => sub {
-            my ($c)   = @_;
-            my $cache = $self->cache;
-            my $path  = $c->req->url->to_abs->to_string;
+            my ($c) = @_;
+            my $path = $c->req->url->to_abs->to_string;
             $app->log->debug( ref $path );
             if ( $cache->is_valid($path) ) {
                 $app->log->debug("serving from cache for $path");
@@ -80,7 +79,7 @@ sub register {
                     and not exists $actions->{$name};
 
             $app->log->debug("storing in cache for $path and action $name");
-            $self->cache->set(
+            $cache->set(
                 $path,
                 {   body    => $c->res->body,
                     headers => $c->res->headers,
