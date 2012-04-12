@@ -16,6 +16,7 @@ use base qw/Mojolicious::Plugin/;
 my $actions;
 
 has 'cache' => sub { CHI->new( driver => 'Memory' ) };
+has 'driver' => 'Memory';
 
 sub register {
     my ( $self, $app, $conf ) = @_;
@@ -25,13 +26,14 @@ sub register {
     }
 
     #setup cache
-    if ( !$cache ) {
-        if ( defined $conf->{options} ) {
-            my $opt = $conf->{options};
-            $opt->{driver} = $self->driver if not defined $opt->{driver};
-            $self->cache( CHI->new(%$opt) );
-        }
+    #if ( !$cache ) {
+    if ( defined $conf->{options} ) {
+        my $opt = $conf->{options};
+        $opt->{driver} = $self->driver if not defined $opt->{driver};
+        $self->cache( CHI->new(%$opt) );
     }
+
+    #}
 
     if ( $app->log->level eq 'debug' ) {
         $self->cache->on_set_error('log');
