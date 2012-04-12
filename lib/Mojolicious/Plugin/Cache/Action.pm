@@ -13,7 +13,6 @@ use base qw/Mojolicious::Plugin/;
 # Module implementation
 #
 
-my $cache;
 my $actions;
 
 has 'cache' => sub { CHI->new( driver => 'Memory' ) };
