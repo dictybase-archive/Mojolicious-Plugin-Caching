@@ -31,9 +31,9 @@ sub register {
         $actions = { map { $_ => 1 } @{ $conf->{actions} } };
     }
 
-    $app->plugins->add_hook(
+    $app->add_hook(
         'after_dispatch' => sub {
-            my ( $self, $c ) = @_;
+            my ($c) = @_;
 
             ## - has to be GET request
             return if $c->req->method ne 'GET';
