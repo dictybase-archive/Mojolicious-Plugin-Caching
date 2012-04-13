@@ -19,4 +19,4 @@ requires:
   Mojolicious: 1.21
 resources:
   repository: git://github.com/dictyBase/Mojolicious-Plugin-Caching.git
-version: 0.0016
+version: 0.0017

@@ -5,7 +5,6 @@ LICENSE
 MANIFEST
 META.json
 META.yml
-README.mkdn
 dist.ini
 lib/Mojolicious/Plugin/Cache.pm
 lib/Mojolicious/Plugin/Cache/Action.pm

@@ -17,7 +17,7 @@ my %module_build_args = (
     "Siddhartha Basu <biosidd\@gmail.com>"
   ],
   "dist_name" => "Mojolicious-Plugin-Cache",
-  "dist_version" => "0.0016",
+  "dist_version" => "0.0017",
   "license" => "perl",
   "module_name" => "Mojolicious::Plugin::Cache",
   "recommends" => {},
