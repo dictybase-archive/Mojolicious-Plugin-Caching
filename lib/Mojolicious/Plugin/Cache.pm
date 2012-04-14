@@ -1,12 +1,25 @@
 package Mojolicious::Plugin::Cache;
+{
+    $Mojolicious::Plugin::Cache::VERSION = '0.0017';    # TRIAL
+}
 
 # Module implementation
 #
 1;
 
-
 # ABSTRACT: Mojolicious plugin for caching
 
+__END__
+
+=pod
+
+=head1 NAME
+
+Mojolicious::Plugin::Cache - Mojolicious plugin for caching
+
+=head1 VERSION
+
+version 0.0017
 
 =head1 SYNOPSIS
 
@@ -15,12 +28,10 @@ Action caching:
   plugin 'cache-action';
   $self->plugin('cache-action');
 
-
 Page caching:
 
  plugin 'cache-page'
  $self->plugin('cache-page');
-
 
 =head1 DESCRIPTION
 
@@ -46,4 +57,15 @@ L<here|Mojolicious::Plugin::Cache::Page>
 
 =back
 
+=head1 AUTHOR
 
+Siddhartha Basu <biosidd@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2010 by Siddhartha Basu.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut

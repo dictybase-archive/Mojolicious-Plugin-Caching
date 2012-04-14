@@ -17,7 +17,7 @@ my $tmp_dir = catdir( $build->base_dir, 't', 'tmp' );
 remove_tree($tmp_dir) if -e $tmp_dir;
 
 use_ok('product');
-my $test = Test::Mojo->new( 'product' );
+my $test = Test::Mojo->new('product');
 $test->get_ok('/product')->status_is(200)->content_like(
     qr/list of product/, 'It shows
 the list of product'
@@ -65,4 +65,3 @@ like( $dom->at('h1')->text,
 END {
     remove_tree( catdir( $app_home_public, 'product' ) );
 }
-

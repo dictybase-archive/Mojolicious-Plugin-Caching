@@ -1,5 +1,7 @@
 package Mojolicious::Plugin::Cache::Page;
-
+{
+    $Mojolicious::Plugin::Cache::Page::VERSION = '0.0017';    # TRIAL
+}
 
 use strict;
 use Carp;
@@ -31,7 +33,7 @@ sub register {
 
     $app->hook(
         'after_dispatch' => sub {
-            my ( $c ) = @_;
+            my ($c) = @_;
 
             ## - has to be GET request
             return if $c->req->method ne 'GET';
@@ -54,10 +56,10 @@ sub register {
                 $file_name = catfile( $cache_dir, $parts->[0] . '.html' );
             }
             else {
-                my $end = pop @$parts;
+                my $end    = pop @$parts;
                 my $folder = $cache_dir;
-                $folder = catdir($folder, $_) for @$parts;
-                make_path( $folder );
+                $folder = catdir( $folder, $_ ) for @$parts;
+                make_path($folder);
                 $file_name = catfile( $folder, $end . '.html' );
             }
 
@@ -77,6 +79,18 @@ sub register {
 
 # ABSTRACT: Page caching plugin
 
+__END__
+
+=pod
+
+=head1 NAME
+
+Mojolicious::Plugin::Cache::Page - Page caching plugin
+
+=head1 VERSION
+
+version 0.0017
+
 =head1 SYNOPSIS
 
 Mojolicious:
@@ -86,7 +100,6 @@ Mojolicious:
 Mojolicious::Lite:
 
  plugin 'cache-page';
-
 
 =head1 DESCRIPTION
 
@@ -103,7 +116,6 @@ parameters. So,  for example /users?page=1 will be cached as users.html and so a
 call to /users?page=2 will retrieve the users.html. The cache is expired by deleting the
 html file that defered it creation until a new request comes in. 
 
-
 =head2 Options
 
 =over
@@ -116,7 +128,7 @@ html file that defered it creation until a new request comes in.
  plugin cache-page => { actions => [qw/user show/]}; 
 
  By default,  all actions with successful GET requests will be cached
- 
+
 =item cache_directory
 
   By default, for mojolicious lite application the current working directory is set for
@@ -125,7 +137,17 @@ html file that defered it creation until a new request comes in.
   #Mojolicious lite using memcache 
   plugin cache-page => { cache_direcotry => '/home/page_cache' }; 
 
-
 =back
 
+=head1 AUTHOR
 
+Siddhartha Basu <biosidd@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2010 by Siddhartha Basu.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut

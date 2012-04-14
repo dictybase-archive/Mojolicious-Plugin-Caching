@@ -1,4 +1,7 @@
 package Mojolicious::Plugin::Cache::Action;
+{
+    $Mojolicious::Plugin::Cache::Action::VERSION = '0.0017';    # TRIAL
+}
 
 use strict;
 use warnings;
@@ -10,7 +13,7 @@ use base qw/Mojolicious::Plugin/;
 # Module implementation
 #
 
-my ($actions, $cache);
+my ( $actions, $cache );
 has 'driver' => 'Memory';
 
 sub register {
@@ -25,7 +28,7 @@ sub register {
         if ( defined $conf->{options} ) {
             my $opt = $conf->{options};
             $opt->{driver} = $self->driver if not defined $opt->{driver};
-            $cache = CHI->new(%$opt) ;
+            $cache = CHI->new(%$opt);
         }
         else {
             $cache = CHI->new( driver => $self->driver );
@@ -39,8 +42,8 @@ sub register {
 
     $app->hook(
         'before_dispatch' => sub {
-            my ($c)   = @_;
-            my $path  = $c->req->url->to_abs->to_string;
+            my ($c) = @_;
+            my $path = $c->req->url->to_abs->to_string;
             $app->log->debug( ref $path );
             if ( $cache->is_valid($path) ) {
                 $app->log->debug("serving from cache for $path");
@@ -93,6 +96,18 @@ sub register {
 
 # ABSTRACT: Action caching plugin
 
+__END__
+
+=pod
+
+=head1 NAME
+
+Mojolicious::Plugin::Cache::Action - Action caching plugin
+
+=head1 VERSION
+
+version 0.0017
+
 =head1 SYNOPSIS
 
 Mojolicious:
@@ -102,7 +117,6 @@ Mojolicious:
 Mojolicious::Lite:
 
  plugin 'cache-action';
-
 
 =head1 DESCRIPTION
 
@@ -117,7 +131,6 @@ and from B<caboose.myplace.com/user/2>
 Different representation of the same resource such as B<tucker.myplace.com/book/list> and
 B<tucker.myplace.com/book/list.json> are considered as separate requests and so are
 cached separately.
-
 
 =head2 Cache backends 
 
@@ -165,7 +178,7 @@ are also available through CHI.
  $self->plugin('cache-action' => { actions => [qw/user show/]});
 
  By default,  all actions with successful GET requests will be cached
- 
+
 =item options
 
   options =>  \%options
@@ -195,7 +208,17 @@ are also available through CHI.
         }
   });
 
-
 =back
 
+=head1 AUTHOR
 
+Siddhartha Basu <biosidd@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2010 by Siddhartha Basu.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut

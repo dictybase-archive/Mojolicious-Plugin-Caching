@@ -1,0 +1,22 @@
+---
+abstract: 'Mojolicious plugin for caching'
+author:
+  - 'Siddhartha Basu <biosidd@gmail.com>'
+build_requires:
+  Module::Build: 0.3601
+configure_requires:
+  Module::Build: 0.3601
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.300014, CPAN::Meta::Converter version 2.120630'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Mojolicious-Plugin-Cache
+requires:
+  CHI: 0.52
+  File::Path: 2.08
+  Mojolicious: 2.80
+resources:
+  repository: git://github.com/dictyBase/Mojolicious-Plugin-Caching.git
+version: 0.0017
